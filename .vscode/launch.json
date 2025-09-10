@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Server (module)",
+      "type": "python",
+      "request": "launch",
+      "module": "app.server.shop_service",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true
+    },
+    {
+      "name": "Client (module)",
+      "type": "python",
+      "request": "launch",
+      "module": "app.client.shop_client",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true,
+      "preLaunchTask": "Wait for API :8000"
+
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Run Server + Client",
+      "configurations": ["Server (module)", "Client (module)"],
+      "stopAll": true
+    }
+  ]
+}

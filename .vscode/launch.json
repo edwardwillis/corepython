@@ -3,30 +3,30 @@
   "configurations": [
     {
       "name": "Server (module)",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
-      "module": "app.server.shop_service",
+      "module": "app.shop.shop_service",
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "justMyCode": true
     },
     {
-      "name": "Client (module)",
-      "type": "python",
+      "name": "Workshop client",
+      "type": "debugpy",
       "request": "launch",
-      "module": "app.client.shop_client",
+      "module": "app.client.workshop",
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "justMyCode": true,
-      "preLaunchTask": "Wait for API :8000"
-
+    },
+    {
+      "name": "Workshop graph client",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "app.client.workshop_graph",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "justMyCode": true
     }
   ],
-  "compounds": [
-    {
-      "name": "Run Server + Client",
-      "configurations": ["Server (module)", "Client (module)"],
-      "stopAll": true
-    }
-  ]
 }

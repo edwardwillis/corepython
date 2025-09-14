@@ -3,10 +3,11 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from typing import List, Optional, Dict, Any
 from uuid import UUID, uuid4
 
-from app.models.product import Product, ProductCreate, SalesRecord, SalesQuery
-from app.models.login import Login, BearerToken
 import random
 from datetime import datetime, timedelta, date
+
+from app.shop.api.models.login import BearerToken, Login
+from app.shop.api.models.product import Product, ProductCreate, SalesQuery, SalesRecord
 
 app = FastAPI()
 
@@ -73,6 +74,14 @@ def login(credentials: Login):
 def add_product(product: ProductCreate):
     new_product = Product(id=uuid4(), name=product.name, description=product.description, price=product.price)
     products_db[new_product.id] = new_product
+
+    # fake some sales data for the new product
+    for _ in range(20):
+        quantity = random.randint(1, 50)
+        total_price = round(new_product.price * quantity, 2)
+        sale_date = (datetime.now() - timedelta(days=random.randint(0, 30))).strftime("%Y-%m-%d")
+        SALES_DB.append(SalesRecord(product_id=new_product.id, quantity=quantity, total_price=total_price, sale_date=sale_date))
+
     return new_product
 
 @app.delete("/products/{product_id}")
@@ -94,6 +103,10 @@ def search_products(description: str):
     desc = description.lower()
     return [p for p in products_db.values() if desc in p.description.lower()]
 
+@api.get("/products/count")
+def total_product_count():
+    return {"total": len(products_db)}
+
 def _between(val, lo, hi) -> bool:
     return (lo is None or val >= lo) and (hi is None or val <= hi)
 
@@ -110,6 +123,17 @@ def get_sales(sales_query: SalesQuery):
     start = (sales_query.page_info.page - 1) * sales_query.page_info.size
     end = start + sales_query.page_info.size
     return filtered_sales[start:end]
+
+@api.get("/sales/{year}/{bucket}", response_model=List[float])
+def sales_summary(year: int, bucket: str):
+    if bucket != "month":
+        raise HTTPException(status_code=400, detail="Unsupported bucket. Only 'month' is supported.")
+    monthly_totals = [0.0] * 12
+    for sale in SALES_DB:
+        sale_date = date.fromisoformat(sale.sale_date)
+        if sale_date.year == year:
+            monthly_totals[sale_date.month - 1] += sale.total_price
+    return [round(total, 2) for total in monthly_totals]
 
 app.include_router(api)
 

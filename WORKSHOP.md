@@ -16,11 +16,11 @@ By combining these two objectives, you’ll be well-equipped to build Python app
 
 How does this workshop relate to AI?
 
-As you'd expect, large language models (LLMs) are accessed via web services that expose an HTTP API - you send your prompt or data in an HTTP request and receive a response for further processing.
+Many artificial intelligence services—including large language models (LLMs)—are accessed through web APIs. You interact with these models by sending HTTP requests containing your prompt or data, and receiving responses for further processing.
 
-In this workshop, we'll use a simple shop service to focus our attention on the core mechanics of making web requests in Python, without the added complexity of AI.
+This workshop uses a simple shop service as a practical example, allowing you to master the fundamentals of making web requests in Python without the complexity of AI-specific APIs.
 
-In future sessions, we'll build on this foundation to show how you can connect to AI services, such as LLMs, using Python.
+Once you’re comfortable with these basics, you’ll be well-prepared to connect to AI services like LLMs in Python, building on the same core techniques.
 
 ### What is HTTP?
 

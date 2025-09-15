@@ -38,6 +38,10 @@ In short, Python’s combination of simplicity, power, and flexibility makes it 
 
 These things make it perfect for calling Web APIs - libraries like **requests** make it super simple to form a requests and process results.
 
+### JSON and pydantic
+
+JSON is the standard format for exchanging data in web APIs. In Python, the Pydantic library makes it easy to define data models with clear, type-checked fields. By combining Pydantic with JSON, you can write business logic using strongly typed Python classes and seamlessly convert them to and from JSON when sending or receiving HTTP requests. This approach ensures your data is both structured and easy to work with throughout your application.
+
 ## 1. Client–Service Interaction
 
 ### 1.1 Sequence Diagram

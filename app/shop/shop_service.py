@@ -7,7 +7,7 @@ import random
 from datetime import datetime, timedelta, date
 
 from app.shop.api.models.login import BearerToken, Login
-from app.shop.api.models.product import Product, ProductCreate, SalesQuery, SalesRecord
+from app.shop.api.models.product import Product, ProductCount, ProductCreate, SalesQuery, SalesRecord
 
 app = FastAPI()
 
@@ -103,9 +103,9 @@ def search_products(description: str):
     desc = description.lower()
     return [p for p in products_db.values() if desc in p.description.lower()]
 
-@api.get("/products/count")
+@api.get("/products/count", response_model=ProductCount)
 def total_product_count():
-    return {"total": len(products_db)}
+    return ProductCount(total=len(products_db))
 
 def _between(val, lo, hi) -> bool:
     return (lo is None or val >= lo) and (hi is None or val <= hi)

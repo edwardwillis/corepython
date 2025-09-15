@@ -12,6 +12,9 @@ class Product(BaseModel):
     description: str
     price: float
 
+class ProductCount(BaseModel):
+    total: int
+
 class ProductCreate(BaseModel):
     name: str
     description: str

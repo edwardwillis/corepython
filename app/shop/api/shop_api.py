@@ -1,11 +1,9 @@
 import requests
 from typing import List
 from uuid import UUID
-from datetime import date, timedelta
-import json
 
 from app.shop.api.models.login import BearerToken, Login
-from app.shop.api.models.product import Product, ProductCreate, SalesQuery, SalesRecord
+from app.shop.api.models.product import Product, ProductCount, ProductCreate, SalesQuery, SalesRecord
 
 
 BASE_URL = "http://127.0.0.1:8000"  # The base URL of the shop API
@@ -76,13 +74,6 @@ def search_products(session: requests.Session, description: str | None = None) -
     resp.raise_for_status()
     return [Product.model_validate(p) for p in resp.json()]
 
-""" Workshop Task 1
-
-    Implement the add_product function to send a POST request to the
-    /products endpoint. The body of the request should contain the
-    JSON-serialized 'product' data. The function should then parse the JSON
-    response from the server and return it as a 'Product' object.
-"""
 def add_product(session: requests.Session, product: ProductCreate) -> Product:
     """Adds a new product via the API.
 
@@ -97,21 +88,12 @@ def add_product(session: requests.Session, product: ProductCreate) -> Product:
             requests.exceptions.HTTPError: If the API returns an error status code.
             requests.exceptions.Timeout: If the request times out.
         """
-    resp = session.post(
-        url=f"{BASE_URL}/products",
-        json=product.model_dump(mode="json"),
-        timeout=TIMEOUT,
-    )
-    resp.raise_for_status()
-    return Product.model_validate(resp.json())
+    # TODO: Implement this function to add a new product via the API.
+    # It should send a POST request to the /products endpoint with the product data,
+    # then parse and return the response as a Product object.
 
-""" Workshop Task 2
+    raise NotImplementedError("Workshop task 1 - provide implementation")
 
-    Implement the update_product function to send a PUT request to the
-    /products/{product_id} endpoint. The body of the request should contain the
-    JSON-serialized 'updated' data. The function should then parse the JSON
-    response from the server and return it as a 'Product' object.
-"""
 def update_product(session: requests.Session, product_id: UUID, updated: ProductCreate) -> Product:
     """Updates an existing product via the API.
 
@@ -175,7 +157,7 @@ def get_product_count(session: requests.Session) -> int:
             session: The requests session object to use for making the HTTP request.
 
         Returns:
-            The total count of products as an integer.
+            A ProductCount model containing the total count of products.
 
         Raises:
             requests.exceptions.HTTPError: If the API responds with an HTTP error status (e.g., 4xx or 5xx).
@@ -183,7 +165,7 @@ def get_product_count(session: requests.Session) -> int:
 
     resp = session.get(f"{BASE_URL}/products/count", timeout=TIMEOUT)
     resp.raise_for_status()
-    return resp.json().get("total", 0)
+    return ProductCount.model_validate(resp.json()).total
 
 def annual_sales(session: requests.Session, year: int, bucket: str) -> list[float]:
     """Retrieves the total sales by month for a specific year.
@@ -199,6 +181,8 @@ def annual_sales(session: requests.Session, year: int, bucket: str) -> list[floa
             requests.exceptions.HTTPError: If the API responds with an HTTP error status (e.g., 4xx or 5xx).
     """
 
-    resp = session.get(f"{BASE_URL}/sales/{year}/{bucket}", timeout=TIMEOUT)
-    resp.raise_for_status()
-    return resp.json()
+    # TODO: Implement this function to retrieve annual sales data via the API.
+    # It should send a GET request to the /sales/{year}/{bucket} endpoint,
+    # then parse and return the response as a list of floats.
+
+    raise NotImplementedError("Workshop task 2 - provide implementation")

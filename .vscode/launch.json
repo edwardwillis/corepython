@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Server (module)",
+      "name": "Shop Service",
       "type": "debugpy",
       "request": "launch",
       "module": "app.shop.shop_service",

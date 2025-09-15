@@ -54,11 +54,11 @@ products_db: Dict[UUID, Product] = {
 def generate_sales_data() -> List[SalesRecord]:
     sales = []
     products_list = list(products_db.values())
-    for _ in range(500):
+    for _ in range(5000):
         product = random.choice(products_list)
         quantity = random.randint(1, 100)
         total_price = round(product.price * quantity, 2)
-        sale_date = (datetime.now() - timedelta(days=random.randint(0, 30))).strftime("%Y-%m-%d")
+        sale_date = (datetime.now() - timedelta(days=random.randint(0, 360))).strftime("%Y-%m-%d")
         sales.append(SalesRecord(product_id=product.id, quantity=quantity, total_price=total_price, sale_date=sale_date))
     return sales
 

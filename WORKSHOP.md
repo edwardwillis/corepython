@@ -12,12 +12,6 @@ This workshop is designed with two main goals in mind:
 
 By combining these two objectives, you’ll be well-equipped to build Python applications that communicate with web services, all within a modern development environment.
 
-### What is HTTP?
-
-HTTP (Hypertext Transfer Protocol) is the foundational protocol used by web browsers and APIs to send and receive data over the internet.
-
-Much of the internet's communication is built on HTTP requests. For example, when you book a hotel using the booking.com app on your phone, each step in the process sends requests to their backend services. Similarly, searching for something on Google in your browser triggers a series of web requests behind the scenes. 
-
 ### In Context with Artificial Intelligence
 
 How does this workshop relate to AI?
@@ -27,6 +21,12 @@ As you'd expect, large language models (LLMs) are accessed via web services that
 In this workshop, we'll use a simple shop service to focus our attention on the core mechanics of making web requests in Python, without the added complexity of AI.
 
 In future sessions, we'll build on this foundation to show how you can connect to AI services, such as LLMs, using Python.
+
+### What is HTTP?
+
+HTTP (Hypertext Transfer Protocol) is the foundational protocol used by web browsers and APIs to send and receive data over the internet.
+
+Much of the internet's communication is built on HTTP requests. For example, when you book a hotel using the booking.com app on your phone, each step in the process sends requests to their backend services. Similarly, searching for something on Google in your browser triggers a series of web requests behind the scenes. 
 
 ### Why Python?
 
@@ -42,9 +42,8 @@ These things make it perfect for calling Web APIs - libraries like **requests** 
 
 JSON is the standard format for exchanging data in web APIs. In Python, the Pydantic library makes it easy to define data models with clear, type-checked fields. By combining Pydantic with JSON, you can write business logic using strongly typed Python classes and seamlessly convert them to and from JSON when sending or receiving HTTP requests. This approach ensures your data is both structured and easy to work with throughout your application.
 
-## 1. Client–Service Interaction
+## 1. HTTP Requests and Responses
 
-### 1.1 Sequence Diagram
 The diagram below breaks-down a web request into the HTTP request and response parts.
 
 In a minute, we will see how this maps onto our python workshop client implementation by writing some python to generate and send a request and process the response from the service.
@@ -65,8 +64,6 @@ sequenceDiagram
     Note left of C: passing it to another service
 
 ```
-
-### 1.2. HTTP Requests
 
 An HTTP request is a message a client sends to a server over the HTTP protocol to ask for something or to change something. It has three main parts:
 
@@ -90,6 +87,11 @@ Accept: application/json
 ```
 
 The API exposed by our shop service can be seen here: http://127.0.0.1:8000/docs
+
+> **Note:**  
+> HTTP requests can pass parameters in the URL’s query string (e.g., `GET /search?q=foo`) or in the request body (commonly JSON) for methods like POST, PUT, or PATCH.  
+> With the ChatGPT/OpenAI API, you typically use the body style: send a POST to an endpoint (e.g., `/v1/responses` or `/v1/chat/completions`) and include fields like `model` and `messages`/`input` in the JSON body rather than as query parameters.
+
 
 # 2. Python Workshop Steps
 
@@ -153,7 +155,7 @@ Now, rerun the __Workshop client__ - we should now see the error has disappeared
 Breakdown. The small amount of Python above has used the __requests__ post method to form a valid HTTP request and send it to the service. We tell it which service endpoint, via the url parameter, and also give it the object we want to add.
 Note the .module_dump call - this converts our data object into JSON form.
 
-## 2.2 Retrieve and Plot Sales Data
+## 2.2 Task 2 - Retrieve and Plot Sales Data
 
 We will now implement a different web request that retrives annual sales figures and plots them on a graph.
 

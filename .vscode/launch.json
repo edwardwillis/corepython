@@ -18,15 +18,6 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "justMyCode": true,
-    },
-    {
-      "name": "Workshop graph client",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "app.client.workshop_graph",
-      "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}",
-      "justMyCode": true
     }
   ],
 }

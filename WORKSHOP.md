@@ -6,7 +6,7 @@ See the ppt in this directory for the slide deck.
 
 <pre>
     rem Install our project python vm
-    C:\> dir C:\> cd Projects C:\Projects> python -m venv .venv
+    "C:\Program Files\Python313\python.exe" -m venv .venv
 
     rem Activate it
     .venv\Scripts\activate.bat

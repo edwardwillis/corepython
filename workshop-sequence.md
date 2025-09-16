@@ -1,18 +1,19 @@
 ```mermaid
 sequenceDiagram
     participant User 👤
-    participant ShopAPI 🏬
+    participant Shop 🏬
     participant Basket 🛒
 
-    User 👤->>ShopAPI 🏬: POST /login
-    ShopAPI 🏬-->>User 👤: Token
+    User 👤->>Shop 🏬: POST /login
+    Shop 🏬-->>User 👤: Token
 
-    User 👤->>ShopAPI 🏬: GET /products?search=emulsion,screws,drill
-    ShopAPI 🏬-->>User 👤: List of products
+    User 👤->>Shop 🏬: GET /products?search=emulsion,screws,drill
+    Shop 🏬-->>User 👤: List of products
 
     User 👤->>Basket 🛒: POST /items (3 products)
     Basket 🛒-->>User 👤: Items added
 
     User 👤->>Basket 🛒: GET /basket
     Basket 🛒-->>User 👤: Basket with 3 items
+
 ```

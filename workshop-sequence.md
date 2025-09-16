@@ -1,17 +1,17 @@
 ```mermaid
 sequenceDiagram
-    participant User 👤
-    participant Shop 🏬
+    participant Client 👤
+    participant Service 🏬
 
-    User 👤->>Shop 🏬: POST /login
-    Shop 🏬-->>User 👤: Token
+    Client 👤->>Service 🏬: 1. POST /login
+    Service 🏬-->>Client 👤: Token
 
-    User 👤->>Shop 🏬: GET /products?search=emulsion,screws,drill
-    Shop 🏬-->>User 👤: List of products
+    Client 👤->>Service 🏬: 2. GET /products?search=emulsion,screws,drill
+    Service 🏬-->>Client 👤: List of products
 
-    User 👤->>Shop 🏬: POST /items 🛒 (3 products)
-    Shop 🏬-->>User 👤: Items added 🛒
+    Client 👤->>Service 🏬: 3. POST /items 🛒 (3 products)
+    Service 🏬-->>Client 👤: Items added 🛒
 
-    User 👤->>Shop 🏬: GET /basket 🛒
-    Shop 🏬-->>User 👤: Basket with 3 items 🛒
+    Client 👤->>Service 🏬: 4. GET /basket 🛒
+    Service 🏬-->>Client 👤: Basket with 3 items 🛒
 ```

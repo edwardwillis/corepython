@@ -1,4 +1,5 @@
-sequenceDiagram
+```mermaid
+    sequenceDiagram
     participant User
     participant ShopAPI
 
@@ -19,3 +20,4 @@ sequenceDiagram
 
     User->>ShopAPI: GET /basket (Authorization: Bearer token)
     ShopAPI-->>User: 200 OK (basket with 3 items)
+```

@@ -2,7 +2,6 @@
 sequenceDiagram
     participant User 👤
     participant Shop 🏬
-    participant Basket 🛒
 
     User 👤->>Shop 🏬: POST /login
     Shop 🏬-->>User 👤: Token
@@ -10,10 +9,9 @@ sequenceDiagram
     User 👤->>Shop 🏬: GET /products?search=emulsion,screws,drill
     Shop 🏬-->>User 👤: List of products
 
-    User 👤->>Basket 🛒: POST /items (3 products)
-    Basket 🛒-->>User 👤: Items added
+    User 👤->>Shop 🏬: POST /items 🛒 (3 products)
+    Shop 🏬-->>User 👤: Items added 🛒
 
-    User 👤->>Basket 🛒: GET /basket
-    Basket 🛒-->>User 👤: Basket with 3 items
-
+    User 👤->>Shop 🏬: GET /basket 🛒
+    Shop 🏬-->>User 👤: Basket with 3 items 🛒
 ```

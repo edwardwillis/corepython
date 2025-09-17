@@ -1,69 +1,56 @@
-from datetime import date, timedelta
 from typing import List
-from app.shop.api.models.login import Login
-from app.shop.api.models.product import PageInfo, Product, ProductCreate, SalesQuery, SalesRecord
-from app.shop.api.shop_api import delete_product, get_sales_history, login, make_session
-from app.shop.api.shop_api import search_products, add_product, update_product, get_product_count
 
-def _print_products(title: str, items: List[Product]) -> None:
-    print(f"{title} ({len(items)} items)")
-    for p in items:
-        print(f" - {p.name}  £{p.price}  ({p.id})")
+from client_api import login_pydantic, add_to_basket, get_basket, search_products
+from models import BasketSummary, ProductSearch, LoginModel
 
-def _print_sales(title: str, items: List[SalesRecord]) -> None:
-    print(f"{title} ({len(items)} items)")
-    for s in items:
-        print(
-            f" - {s.sale_date}  qty={s.quantity}  total={s.total_price}  product={s.product_id}"
-        )
+def main():
+
+
+    #Login to service
+    user = LoginModel(
+        username = "Version1",
+        password = "Version1"
+    )
+    user_token = login_pydantic(user)
+    print(f"login_pydantic got token: {user_token.access_token}")
+
+
+    #Search for items in the shop
+    search_terms = ["emulsion", "screws", "drill"]
+    chosen_ids: List[int] = []
+
+    for term in search_terms:
+        results = search_products(ProductSearch(search_str=term))
+        if not results:
+            print(f"[search] '{term}' - no results, skipping")
+            continue
+        top = results[0]
+        chosen_ids.append(top.id)
+        print(f"[search] '{term}' - picked: {top.id} | {top.name} (${top.price})")
+    
+
+    #Add items to basket
+    for pid in chosen_ids:
+        basket_after = add_to_basket(user_token.access_token, product_id=pid, quantity=2)
+        print(f"[basket] added product_id={pid}; basket now has {len(basket_after.items)} item(s)")  
+
+
+    basket = get_basket(user_token.access_token)
+    print(f"Current basket: {basket}")
+
+    # Print basket summary
+    for it in basket.items:
+        line_total = round(it.unit_price * it.quantity, 2)
+        print(f" - {it.product_id}: {it.name} x{it.quantity} @ £{it.unit_price} = £{line_total}")
+
+
+
+
+
+    # Print basket summary
+    summary = BasketSummary(items=basket.items)
+    print(f"\nBasket summary: total_quantity={summary.total_quantity}, total=£{summary.total}")
+    
 
 if __name__ == "__main__":
-    token = login(Login(username="Version1", password="Version1"))
-    session = make_session(token)
-
-    # Get all products
-    all_products = search_products(session)
-    _print_products("All products", all_products)
-
-    print("Let's create a product, update it, get its sales history, and delete it.")
-
-    print("Total products before create:", get_product_count(session))
-    created = add_product(
-        session,
-        ProductCreate(
-            name="Logitech MX Master 3S",
-            description="Wireless mouse with ergonomic design",
-            price=99.99,
-        ),
-    )
-    print("Total products after create:", get_product_count(session))
-
-    updated = update_product(
-        session,
-        created.id,
-        ProductCreate(
-            name="Logitech MX Master 3S (Updated)",
-            description="Wireless mouse with ergonomic design - updated",
-            price=94.99,
-        ),
-    )
-    print("\nUpdated:", updated)
-
-    today = date.today()
-    last_week = today - timedelta(days=7)
-    sales = get_sales_history(
-        session,
-        SalesQuery(
-            start_date=last_week,
-            end_date=today,
-            product_id=created.id,  
-            page_info=PageInfo(page=1, size=10),
-        ),
-    )
-    _print_sales("Recent sales for created product", sales)
-
-    deleted = delete_product(session, created.id)
-    print("\nDeleted:", deleted)
-
-    after = search_products(session, "Logitech MX Master 3S")
-    _print_products("Search after delete", after)
+    main()

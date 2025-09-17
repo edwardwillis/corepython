@@ -1,5 +1,7 @@
 # 🐍  Core Python for Web Service Interaction Workshop
 
+Required files on sharepoint [here](https://version1.sharepoint.com/:f:/r/sites/JavaAndOS-PrivateFSCapability/Learning%20and%20Development/Workshops/Python%20Fundamentals?csf=1&web=1&e=hZCefb)
+
 See the ppt [here](https://version1.sharepoint.com/:f:/r/sites/JavaAndOS-PrivateFSCapability/Learning%20and%20Development/Workshops/Python%20Fundamentals?csf=1&web=1&e=gS9umI) for the slide deck.
 
 ## Useful DOS command-lines

@@ -1,6 +1,6 @@
 from typing import List
 
-from client_api import login_pydantic, add_to_basket, get_basket, search_products
+from client_api import login, add_to_basket, get_basket, search_products
 from models import BasketSummary, ProductSearch, LoginModel
 
 def main():
@@ -11,7 +11,7 @@ def main():
         username = "Version1",
         password = "Version1"
     )
-    user_token = login_pydantic(user)
+    user_token = login(user)
     print(f"login_pydantic got token: {user_token.access_token}")
 
 

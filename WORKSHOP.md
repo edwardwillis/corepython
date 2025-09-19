@@ -9,6 +9,7 @@ See the ppt [here](https://version1.sharepoint.com/:f:/r/sites/JavaAndOS-Private
 <pre>
     rem Check system python installation
     "C:\Program Files\Python313\python.exe" --version
+    Python 3.13.5
     
     rem Install our project python vm
     "C:\Program Files\Python313\python.exe" -m venv .venv

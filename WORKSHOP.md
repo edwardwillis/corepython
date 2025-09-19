@@ -7,6 +7,9 @@ See the ppt [here](https://version1.sharepoint.com/:f:/r/sites/JavaAndOS-Private
 ## Useful DOS command-lines
 
 <pre>
+    rem Check system python installation
+    "C:\Program Files\Python313\python.exe" --version
+    
     rem Install our project python vm
     "C:\Program Files\Python313\python.exe" -m venv .venv
 

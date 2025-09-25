@@ -15,3 +15,19 @@ sequenceDiagram
     Client 👤->>Service 🏬: 4. GET /basket 🛒
     Service 🏬-->>Client 👤: Basket with 3 items 🛒
 ```
+
+```mermaid
+stateDiagram-v2
+direction LR
+    [*] --> ACTIVE: 🛡️
+    ACTIVE --> ACKNOWLEDGED : 👤
+    ACKNOWLEDGED --> RESOLVED : 👤
+    
+    ACTIVE --> CANCELLED : 👤
+    ACKNOWLEDGED --> CANCELLED : 👤
+
+    ACTIVE : [ACTIVE] Alert created by SpiderShield engine
+    ACKNOWLEDGED : [ACKNOWLEDGED] Alert triaged
+    RESOLVED : [RESOLVED] Issue fixed
+    CANCELLED : [CANCELLED] Alert dismissed/invalid
+```
